@@ -1,7 +1,7 @@
 import { Component, OnDestroy, Output } from '@angular/core';
 import { DataService } from './data.service';
-import { Subscription } from 'rxjs';
-import { User } from '../shared/types.s';
+import { Observable, Subscription } from 'rxjs';
+import { Character, User } from '../shared/types.s';
 
 @Component({
     selector: 'app-home',
@@ -9,15 +9,17 @@ import { User } from '../shared/types.s';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnDestroy {
+    // recursos de las cards
     subsList:any[]=[]
     dataSubscription: Subscription
     subsState = true
-
     data:User={} as User
+
+    
 
     constructor(private dataService: DataService) {
 
-        this.dataSubscription = this.dataService.getDataCard().subscribe({
+        this.dataSubscription = this.dataService.getDataCard$().subscribe({
             next: (value) => {
                 if(value.user){
                     this.data = value.user

@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ObservableUserType, User } from '../shared/types.s';
-import { Observable } from 'rxjs';
+import { Character, ObservableUserType, User } from '../shared/types.s';
+import { Observable, of } from 'rxjs';
+import list from '../shared/rick&morty'
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   URL = 'https://random-data-api.com/api/v2/users'
+  characters = list
 
   constructor() { }
 
-  //
-  getDataCard(): Observable<ObservableUserType> {
+  // devuelve un Observable de tipo ObservableUserType 
+  // ObservableUserType es un objeto con el usuario traido de la API y un array donde se almacenan los datos que han sido traidos'
+  getDataCard$(): Observable<ObservableUserType> {
 
     let counter = 0
     let data:User|null
@@ -49,6 +52,10 @@ export class DataService {
       console.error(error);
       return null;
     }
+  }
+
+  getCharacters$():Observable<Character[]>{
+    return of(this.characters);
   }
 
 }

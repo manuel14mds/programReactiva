@@ -1,7 +1,9 @@
-<mat-card>
-    <mat-card-header><h1>Programación Radiactiva</h1></mat-card-header>
+<mat-card class="headerCard">
+    <mat-card-header><h1>Programación Radiactiva - Manuel Florez</h1></mat-card-header>
 </mat-card>
 <br>
+
+<!-- En este primer bloque hago uso de los servicios y del observable -->
 <div class="cardBox">
     <h2 [style]="!subsState?'color:red':'color:green'">{{subsState?'Suscrito':'De-suscrito'}} observador</h2>
 
@@ -14,9 +16,15 @@
     </ng-template>
     <br>
 
+    <!-- muestra el nombre de usuarios de tdas las cards que visualizaron -->
     <h3>Cards Mostradas</h3>
     <ul>
         <li *ngFor="let item of subsList">Card No {{item.count}} {{item.card}}</li>
     </ul>
-
 </div>
+<br>
+
+<div class="listBox">
+    <app-characters></app-characters>
+</div>
+

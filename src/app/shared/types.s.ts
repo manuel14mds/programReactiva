@@ -1,3 +1,10 @@
+export type Character = {
+    age:string
+    name:string
+    gender:string
+    status:string
+    traits:string
+}
 export type ObservableUserType = {
     user:User|null, 
     showedCardList:any[]
