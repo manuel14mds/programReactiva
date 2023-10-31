@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-header><h1>Programación Radiactiva</h1></mat-card-header>
+</mat-card>
+<br>
+<div class="cardBox">
+    <h2 [style]="!switchSubscribe?'color:red':''">{{switchSubscribe?'Suscrito':'De-suscrito'}}</h2>
+
+    <app-card [dataSource]="data"></app-card>
+    
+    <br>
+
+    <h3>Cards</h3>
+    <ul>
+        <li *ngFor="let item of subsList">Card No {{item.count}} {{item.card}} montada</li>
+    </ul>
+
+</div>
