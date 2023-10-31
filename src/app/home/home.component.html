@@ -3,15 +3,20 @@
 </mat-card>
 <br>
 <div class="cardBox">
-    <h2 [style]="!switchSubscribe?'color:red':''">{{switchSubscribe?'Suscrito':'De-suscrito'}}</h2>
+    <h2 [style]="!subsState?'color:red':'color:green'">{{subsState?'Suscrito':'De-suscrito'}} observador</h2>
 
-    <app-card [dataSource]="data"></app-card>
-    
+    <!-- si aún no hay datos muestra loading.. -->
+    <div *ngIf="(data | json) == ({} | json); else elseBlock">Loading...</div>
+
+    <!-- si hay datos entonces muestra esto -->
+    <ng-template #elseBlock>
+        <app-card [dataSource]="data"></app-card>
+    </ng-template>
     <br>
 
-    <h3>Cards</h3>
+    <h3>Cards Mostradas</h3>
     <ul>
-        <li *ngFor="let item of subsList">Card No {{item.count}} {{item.card}} montada</li>
+        <li *ngFor="let item of subsList">Card No {{item.count}} {{item.card}}</li>
     </ul>
 
 </div>

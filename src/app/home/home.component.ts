@@ -1,6 +1,6 @@
 import { Component, OnDestroy, Output } from '@angular/core';
 import { DataService } from './data.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { User } from '../shared/types.s';
 
 @Component({
@@ -9,21 +9,23 @@ import { User } from '../shared/types.s';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnDestroy {
-    subsList: any[] = []
+    subsList:any[]=[]
     dataSubscription: Subscription
-    switchSubscribe = true
+    subsState = true
 
-    data: any
+    data:User={} as User
 
     constructor(private dataService: DataService) {
 
-        this.dataSubscription = this.getDataCard().subscribe({
+        this.dataSubscription = this.dataService.getDataCard().subscribe({
             next: (value) => {
-                this.data = value
+                if(value.user){
+                    this.data = value.user
+                    this.subsList = value.showedCardList
+                }
             },
             complete: (() => {
-                this.switchSubscribe = false
-                this.dataSubscription.unsubscribe()
+                this.userUnsubscriber()
             })
         })
 
@@ -33,28 +35,11 @@ export class HomeComponent implements OnDestroy {
         this.dataSubscription.unsubscribe()
     }
 
-    getDataCard(): Observable<User> {
-        
-        let counter = 0
-        let dataCard
-
-        return new Observable((subscriber) => {
-            setInterval(async () => {
-                if (counter >= 3) {
-                    subscriber.complete()
-                } else {
-                    dataCard = await this.dataService.getUser()
-                    if (dataCard) {
-                        counter++
-                        this.subsList = [...this.subsList, { count: counter, card: dataCard?.username }]
-                        subscriber.next(dataCard)
-                    } else {
-                        console.log('data null')
-                    }
-                }
-            }, 3000)
-
-        })
+    // unsubscribe del observer del user y cambia el estado de variable switch
+    userUnsubscriber(){
+        this.dataSubscription.unsubscribe()
+        this.subsState = false
     }
+
 
 }

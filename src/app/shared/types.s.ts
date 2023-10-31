@@ -1,3 +1,7 @@
+export type ObservableUserType = {
+    user:User|null, 
+    showedCardList:any[]
+}
 export type User = {
     id:                      number;
     uid?:                     string;
